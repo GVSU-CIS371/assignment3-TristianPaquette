@@ -1,10 +1,23 @@
 <template>
-  <div class="froth">
-    <div v-for=" in 5" class="foam"></div>
+  <div v-if="type !== 'No Creamer'" class="froth">
+    <div v-for="i in 5" :key="i" class="foam" :style="{ backgroundColor: foamColor }"></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import creamers from '../data/creamers.json'
+
+// Which creamer was chosen
+const props = defineProps<{ type: string }>()
+
+// Looks up color from creamers.json
+const foamColor = computed(() => {
+  const match = creamers.find(c => c.name === props.type)
+  return match ? match.color : '#f7edd9'
+})
+</script>
+
 <style lang="scss" scoped>
 .froth {
   overflow: visible;

@@ -1,8 +1,20 @@
 <template>
-  <div class="baseBeverage"></div>
+  <div class="baseBeverage" :style="{ backgroundColor: baseColor }"></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+import bases from '../data/bases.json'
+
+// which base drink was chosen
+const props = defineProps<{ type: string }>()
+
+// looks up color from bases.json
+const baseColor = computed(() => {
+  const match = bases.find(b => b.name === props.type)
+  return match ? match.color : '#6F4E37'
+})
+</script>
 
 <style scoped>
 .baseBeverage {
@@ -15,3 +27,4 @@
   /* // border-radius: 0.05em 0.05em 2.2em 2.2em; */
 }
 </style>
+
